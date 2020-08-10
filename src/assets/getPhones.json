@@ -1,0 +1,25 @@
+{
+    "elements": [
+        {
+            "fio": "TestName_1 TestFamily_1 TestLastName_1",
+            "phone": "+7(999) 111 22 33",
+            "date": "2020.12.10 01:00:00",
+            "comment": "Test Comment 1",
+            "select": false
+        },
+        {
+            "fio": "TestName_2 TestFamily_2 TestLastName_2",
+            "phone": "+7(999) 111 22 34",
+            "date": "2020.12.11 02:00:00",
+            "comment": "Test Comment 2",
+            "select": true
+        },
+        {
+            "fio": "TestName_3 TestFamily_3 TestLastName_3",
+            "phone": "+7(999) 111 22 34",
+            "date": "2020.12.12 03:00:00",
+            "comment": "Test Comment 3",
+            "select": false
+        }
+    ]
+}

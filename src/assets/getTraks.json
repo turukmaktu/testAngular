@@ -1,0 +1,28 @@
+{
+    "elements": [
+        {
+            "address": "test address 1",
+            "purshaseDate": "2020.12.10 01:00:00",
+            "purshasePrice": 100,
+            "rehabBudgetUsed": 200,
+            "saleDate": "2020.12.10 01:10:00",
+            "salePrice": 300
+        },
+        {
+            "address": "test address 2",
+            "purshaseDate": "2020.12.11 01:00:00",
+            "purshasePrice": 101,
+            "rehabBudgetUsed": 201,
+            "saleDate": "2020.12.11 01:10:00",
+            "salePrice": 301
+        },
+        {
+            "address": "test address 3",
+            "purshaseDate": "2020.12.12 01:00:00",
+            "purshasePrice": 102,
+            "rehabBudgetUsed": 203,
+            "saleDate": "2020.12.12 01:10:00",
+            "salePrice": 303
+        }
+    ]
+}

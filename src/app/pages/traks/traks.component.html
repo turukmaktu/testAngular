@@ -1,0 +1,64 @@
+<div class="row">
+    <h1>Track Record</h1>
+    <div class="col-12">Please provide the details of your recent similar detail</div>
+    <div class="col-12" *ngFor="let form of forms; let i = index">
+        <form [formGroup]="form" novalidate (ngSubmit)="save()">
+            <div class="form-group">
+                <label>{{i + 1}}. Property address</label>
+                <input class="form-control" name="address" formControlName="address" />
+                <div class="alert alert-danger"
+                    *ngIf="form.controls['address'].invalid && form.controls['address'].touched">
+                    not correct
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Purshase date</label>
+                    <input class="form-control" name="purshaseDate" formControlName="purshaseDate" />
+                    <div class="alert alert-danger"
+                        *ngIf="form.controls['purshaseDate'].invalid && form.controls['purshaseDate'].touched">
+                        not correct
+                    </div>
+                </div>
+                <div class="form-group  col-3">
+                    <label>Purshase price</label>
+                    <input class="form-control" name="purshasePrice" formControlName="purshasePrice" />
+                    <div class="alert alert-danger"
+                        *ngIf="form.controls['purshasePrice'].invalid && form.controls['purshasePrice'].touched">
+                        not correct
+                    </div>
+                </div>
+                <div class="form-group  col-3">
+                    <label>Rehab bydget used</label>
+                    <input class="form-control" name="rehabBudgetUsed" formControlName="rehabBudgetUsed" />
+                    <div class="alert alert-danger"
+                        *ngIf="form.controls['rehabBudgetUsed'].invalid && form.controls['rehabBudgetUsed'].touched">
+                        not correct
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>Sale date</label>
+                    <input class="form-control" name="saleDate" formControlName="saleDate" />
+                    <div class="alert alert-danger"
+                        *ngIf="form.controls['saleDate'].invalid && form.controls['saleDate'].touched">
+                        not correct
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label>Sale price</label>
+                    <input class="form-control" name="salePrice" formControlName="salePrice" />
+                    <div class="alert alert-danger"
+                        *ngIf="form.controls['salePrice'].invalid && form.controls['salePrice'].touched">
+                        not correct
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+    <div col-12>
+        <a (click)="add()" class="btn btn-primary">Add Track</a>
+    </div>
+</div>
