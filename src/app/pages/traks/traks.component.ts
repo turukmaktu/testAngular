@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TraksService } from '../../traks.service';
 import { Track } from '../../models/Track';
-import * as moment from 'moment';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -18,43 +17,67 @@ export class TraksComponent implements OnInit {
   forms: FormGroup[] = [];
 
   ngOnInit(): void {
-    this.traksService.getElements().subscribe((traksElements) => {
-      this.elements = traksElements;
-      this.elements.map((traksElementForm) => {
+    this.getElements();
+  }
+
+  getElements(){
+    this.traksService.getElements().subscribe((elements) => {
+      this.elements = elements;
+
+      this.forms = [];
+
+      //заполнить данные для формы
+      this.elements.map(element => {
+
         this.forms.push(new FormGroup({
-          address: new FormControl(traksElementForm.address, Validators.required),
-          purshaseDate: new FormControl(traksElementForm.purshaseDate, Validators.required),
-          purshasePrice: new FormControl(traksElementForm.purshasePrice, Validators.required),
-          rehabBudgetUsed: new FormControl(traksElementForm.rehabBudgetUsed, Validators.required),
-          saleDate: new FormControl(traksElementForm.saleDate, Validators.required),
-          salePrice: new FormControl(traksElementForm.salePrice, Validators.required),
+          id: new FormControl(element.id, Validators.required),
+          address: new FormControl(element.address, Validators.required),
+          purshaseDate: new FormControl(element.purshaseDate, Validators.required),
+          purshasePrice: new FormControl(element.purshasePrice, Validators.required),
+          rehabBudgetUsed: new FormControl(element.rehabBudgetUsed, Validators.required),
+          saleDate: new FormControl(element.saleDate, Validators.required),
+          salePrice: new FormControl(element.salePrice, Validators.required),
         }));
       });
     });
+
   }
 
-  add(){
-
-    let element: Track = {
-      address: "",
-      purshaseDate: moment(),
-      purshasePrice: 0,
-      rehabBudgetUsed: 0,
-      saleDate: moment(),
-      salePrice: 0
-    };
-
-    this.forms.push(new FormGroup({
-      address: new FormControl(element.address, Validators.required),
-      purshaseDate: new FormControl(element.purshaseDate, Validators.required),
-      purshasePrice: new FormControl(element.purshasePrice, Validators.required),
-      rehabBudgetUsed: new FormControl(element.rehabBudgetUsed, Validators.required),
-      saleDate: new FormControl(element.saleDate, Validators.required),
-      salePrice: new FormControl(element.salePrice, Validators.required),
-    }));
-
-    this.elements.push(element);
-      
+  del(id: number){
+    this.traksService.deleteElements(id).subscribe(data => {
+      this.getElements();
+    });
   }
 
+  update(element: Track){
+    this.traksService.updateElement(element).subscribe(data => {
+      this.getElements();  
+    });
+}
+
+  save(form){
+    let savedElement: Track = {
+      id: form.controls.id.value,
+      address: form.controls.address.value,
+      purshaseDate: new Date(form.controls.purshaseDate.value),
+      purshasePrice: form.controls.purshasePrice.value,
+      rehabBudgetUsed: form.controls.rehabBudgetUsed.value,
+      saleDate: new Date(form.controls.saleDate.value),
+      salePrice: form.controls.salePrice.value,
+    }
+
+  this.update(savedElement);
+}
+
+add(){
+  this.traksService.addElement({
+    id: null,
+    address: "added element address",
+    purshaseDate: new Date(),
+    purshasePrice: 100,
+    rehabBudgetUsed: 200,
+    saleDate: new Date(),
+    salePrice: 300
+  }).subscribe(data => this.getElements())
+}
 }

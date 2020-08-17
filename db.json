@@ -1,0 +1,57 @@
+{
+  "tracks": [
+    {
+      "id": 1,
+      "address": "test address 1",
+      "purshaseDate": "2020-12-09T18:00:00.000Z",
+      "purshasePrice": 100,
+      "rehabBudgetUsed": 200,
+      "saleDate": "2020-12-09T18:10:00.000Z",
+      "salePrice": 301
+    },
+    {
+      "id": 2,
+      "address": "test address 2",
+      "purshaseDate": "2020-12-10T18:00:00.000Z",
+      "purshasePrice": 101,
+      "rehabBudgetUsed": 201,
+      "saleDate": "2020-12-10T18:10:00.000Z",
+      "salePrice": 303
+    },
+    {
+      "id": 3,
+      "address": "test address 3",
+      "purshaseDate": "2020-12-11T18:00:00.000Z",
+      "purshasePrice": 102,
+      "rehabBudgetUsed": 203,
+      "saleDate": "2020-12-11T18:10:00.000Z",
+      "salePrice": 304
+    }
+  ],
+  "phones": [
+    {
+      "id": 1,
+      "fio": "TestName_2 TestFamily_1 TestLastName_3",
+      "phone": "+7(999) 111 22 33",
+      "date": "10/20/2020",
+      "comment": "Test Comment 1",
+      "select": true
+    },
+    {
+      "id": 2,
+      "fio": "TestName_2 TestFamily_2 TestLastName_2",
+      "phone": "+7(999) 111 22 34",
+      "date": "2020.12.12 03:00:00",
+      "comment": "Test Comment 2",
+      "select": false
+    },
+    {
+      "id": 3,
+      "fio": "TestName_3 TestFamily_3 TestLastName_3",
+      "phone": "+7(999) 111 22 34",
+      "date": "2020.12.12 03:00:00",
+      "comment": "Test Comment 3",
+      "select": false
+    }
+  ]
+}

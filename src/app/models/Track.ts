@@ -1,10 +1,9 @@
-import * as moment from 'moment'
-
 export interface Track{
+    id: number,
     address: string;
-    purshaseDate: moment.Moment;
+    purshaseDate: Date;
     purshasePrice: number;
     rehabBudgetUsed: number;
-    saleDate: moment.Moment;
+    saleDate: Date;
     salePrice: number;
 }

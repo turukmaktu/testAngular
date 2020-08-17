@@ -1,47 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Track } from './models/Track';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TraksService {
 
-  tracks: Track[];
+  constructor(private http: HttpClient) {}
 
-  tracksObserver: Observable<Track[]>
-
-  constructor(private http: HttpClient) { 
-    this.tracks = [];
-  }
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   getElements() : Observable<Track[]>{
-    if(this.tracks.length != 0){
-      return of(this.tracks);
-    }else{
-      return this.http.get('assets/getTraks.json').pipe(map(data => {
-
-        let elements: any[] = data['elements'];
-
-        return elements.map((element) => {
-          
-          let el: Track = {
-            address: element.address,
-            purshaseDate: moment(element.purshaseDate),
-            purshasePrice: element.purshasePrice,
-            rehabBudgetUsed: element.rehabBudgetUsed,
-            saleDate: moment(element.saleDate),
-            salePrice: element.salePrice
-          };
-
-          this.tracks.push(el);
-          
-          return el;
-        });
-      }));
-    }
+    return this.http.get<Track[]>('http://localhost:3000/tracks').pipe();
   }
+
+  addElement(element: Track) : Observable<Track>{
+    return this.http.post<Track>('http://localhost:3000/tracks', element, this.httpOptions).pipe();
+  }
+
+  updateElement(element: Track): Observable<Track>{
+    return this.http.patch<Track>(`http://localhost:3000/tracks/${element.id}`, element, this.httpOptions).pipe();
+  }
+
+  getById(idEl) : Observable<Track>{
+    return this.http.get<Track>(`http://localhost:3000/tracks/${idEl}`).pipe();
+  }
+  
+  deleteElements(id: number): Observable<Track> {
+    return this.http.delete<Track>(`http://localhost:3000/tracks/${id}`,this.httpOptions).pipe();
+  }
+
 }

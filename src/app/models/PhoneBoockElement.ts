@@ -1,9 +1,8 @@
-import * as moment from 'moment'
-
 export interface PhoneBoockElement{
+    id: number,
     fio: string;
     phone: string;
-    date: moment.Moment;
+    date: Date;
     comment: string;
     select: boolean;
 }

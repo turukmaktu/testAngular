@@ -1,114 +1,45 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PhoneBoockElement } from './models/PhoneBoockElement';
-import {HttpClient} from '@angular/common/http';
-import * as moment from 'moment'
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhoneBoockService{
 
-  phoneBoockElements: PhoneBoockElement[];
-
   phoneBoockElementsObserver: Observable<PhoneBoockElement[]>;
 
-  constructor(private http: HttpClient) {
-    this.phoneBoockElements = [];
-  }
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  constructor(private http: HttpClient) {}
 
   getElements(sort: boolean) : Observable<PhoneBoockElement[]>{
-
-    if(this.phoneBoockElements.length != 0){
-      return of(this.phoneBoockElements.sort((first:  PhoneBoockElement, second: PhoneBoockElement) => {
-        let firstSort = Number(first.select);
-        let secondSort = Number(second.select);
-      
-          if(sort){
-            return firstSort - secondSort;
-          }else{
-            return  secondSort - firstSort;
-          }
-        }));
+    if(sort){
+      return this.http.get<PhoneBoockElement[]>('http://localhost:3000/phones?_sort=select&_order=asc').pipe();
     }else{
-      return this.http.get('assets/getPhones.json').pipe(map(data => {
-
-        let elements: any[] = data['elements'];
-
-        return elements.sort((first , second) => {
-          if(sort){
-            return first.select - second.select;
-          }else{
-            return second.select - first.select;
-          }
-        }).map((element) => {
-          
-          let el: PhoneBoockElement = {
-            fio: element.fio,
-            phone: element.phone,
-            date: moment(element.date),
-            comment: element.comment,
-            select: element.select
-          };
-
-          this.phoneBoockElements.push(el);
-          
-          return el;
-        });
-      }));
+      return this.http.get<PhoneBoockElement[]>('http://localhost:3000/phones?_sort=select&_order=desc').pipe();
     }
-
+    
   }
 
-  addElement(element: PhoneBoockElement) {
-    
-    console.log({
-      addedPhoneBockElement: element
-    });
-    
-    this.phoneBoockElements.push(element);
-    return true;
+  addElement(element: PhoneBoockElement) : Observable<PhoneBoockElement>{
+    return this.http.post<PhoneBoockElement>('http://localhost:3000/phones', element, this.httpOptions).pipe();
   }
 
-  updateElement(idEl, element: PhoneBoockElement){
-
-    
-    this.phoneBoockElements.map((el,id) => {
-      
-      if(id == idEl){
-        el.fio = element.fio;
-        el.phone = element.phone;
-        el.date = element.date;
-        el.comment = element.comment;
-        el.select = element.select;
-      }
-    })
-
+  updateElement(element: PhoneBoockElement): Observable<PhoneBoockElement>{
+    return this.http.patch<PhoneBoockElement>(`http://localhost:3000/phones/${element.id}`, element, this.httpOptions).pipe();
   }
 
-  getById(idEl) : PhoneBoockElement{
-
-    let result : PhoneBoockElement;
-
-    this.phoneBoockElements.map((el,id) => {
-      if(id == idEl){
-        result = el;
-      }
-    })
-
-    return result;
+  getById(idEl) : Observable<PhoneBoockElement>{
+    return this.http.get<PhoneBoockElement>(`http://localhost:3000/phones/${idEl}`).pipe();
   }
   
-  deleteElements(element: PhoneBoockElement) {
-     console.log({
-       deletedPhoneBockElement: element
-     });
-
-     this.phoneBoockElements = this.phoneBoockElements.filter((checkElement) => { return checkElement != element });
-     return true;
-
+  deleteElements(id: number): Observable<PhoneBoockElement> {
+    return this.http.delete<PhoneBoockElement>(`http://localhost:3000/phones/${id}`,this.httpOptions).pipe();
   }
 
 }
